@@ -2,15 +2,7 @@ import React from 'react'
 import "./App.css"
 import Die from './components/Die';
 import { v4 as uuidv4 } from "uuid";
-const App = () => {
-    React.useEffect(()=>{
-        const allHeld = dice.every((die)=> die.isheld) 
-        const firstValue = dice[0]?.value; 
-        const allSameValue = dice.every(die => die.value === firstValue)
-        if(allHeld && allSameValue){
-              setTenzies(true);
-        }
-   },[dice])
+const App = () => {  
     const createAllDice=()=>{
         return Array.from({length:10},()=>({
              value : Math.ceil(Math.random() * 6), 
@@ -20,7 +12,6 @@ const App = () => {
     }  
     const [dice,setDice] = React.useState(createAllDice())    
     const [tenzies,setTenzies]  = React.useState(false);
-
     const updateTheisHeld=(id)=>{
          setDice(prevState=>
             prevState.map(
@@ -39,13 +30,19 @@ const App = () => {
             setDice(prevState=>
                 prevState.map(dice=>
                    
-                      dice.isheld ? dice : {...dice , value:Math.ceil(Math.random() * 6 )}
-                    
+                      dice.isheld ? dice : {...dice , value:Math.ceil(Math.random() * 6 )}  
                 )
             ) 
         }
     }
-   
+    React.useEffect(()=>{
+        const allHeld = dice.every((die)=> die.isheld) 
+        const firstValue = dice[0]?.value; 
+        const allSameValue = dice.every(die => die.value === firstValue)
+        if(allHeld && allSameValue){
+              setTenzies(true);
+        }
+   },[dice])
     return (
         <main className="game-container">
           <h1>Tenzies</h1>
